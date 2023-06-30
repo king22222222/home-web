@@ -1,0 +1,22 @@
+@keyframes deviceBgdown {
+    0% {
+        transform: translateY(-2rem) rotateX(180deg);
+    }
+    50% {
+        transform: translateY(0) rotateX(180deg);
+    }
+    100% {
+        transform: translateY(-2rem) rotateX(180deg);
+    }
+}
+@-webkit-keyframes deviceBgdown {
+    0% {
+        transform: translateY(-2rem) rotateX(180deg);
+    }
+    50% {
+        transform: translateY(0) rotateX(180deg);
+    }
+    100% {
+        transform: translateY(-2rem) rotateX(180deg);
+    }
+}
