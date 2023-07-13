@@ -77,7 +77,7 @@ export default {
 
 .nav-list {
     display: flex;
-    font-size: 0.18rem;
+    font-size: 0.2rem;
 }
 
 .nav-item {

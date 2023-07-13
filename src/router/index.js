@@ -6,11 +6,12 @@ const routes = [
     },
     {
         path: "/home",
+        name: "Home",
         component: () => import("@/pages/myHome/myHome.vue")
     },
     {
         path: "/webShow",
-        name: "webShow",
+        name: "WebShow",
         component: () => import("@/pages/webShow/webShow.vue")
     }
 ];

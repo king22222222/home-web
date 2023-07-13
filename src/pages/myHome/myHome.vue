@@ -1,21 +1,17 @@
 <template>
     <div class="content">
         <!-- 联系浮窗 -->
-        <view class="contact-box" :style="{ top: windowHeight / 2 + 'px' }" @mouseleave="onContactOut()">
+        <view class="contact-box" :style="{ top: windowHeight / 2 + 'px' }" @mouseleave="onContactOut">
             <view class="contact-dialog" v-if="showContactDialog">
                 <view id="contactNum" v-if="contactList[curContactIndex].hasOwnProperty('phone')" class="phone-num">{{
                     contactList[curContactIndex].phone
                 }}</view>
-                <img id="contactCode" v-if="contactList[curContactIndex].hasOwnProperty('img')" class="code-img" :src="contactList[curContactIndex].img" />
+                <img id="contactCode" v-if="contactList[curContactIndex].hasOwnProperty('img')" class="code-img"
+                    :src="contactList[curContactIndex].img" />
             </view>
             <view class="contact-list">
-                <view
-                    class="contact-item"
-                    v-for="(item, index) in contactList"
-                    :key="{ index }"
-                    @mouseover="onContactHover(index)"
-                    @click="onCantactCopy(index)"
-                >
+                <view class="contact-item" v-for="(item, index) in contactList" :key="index"
+                    @mouseover="onContactHover(index)" @click="onCantactCopy(index)">
                     <view class="contact-icon iconfont" :class="item.icon"></view>
                     <view class="contact-type">{{ item.title }}</view>
                 </view>
@@ -30,17 +26,20 @@
             <img class="index-img" src="../../assets/index-img.jpg" />
         </div>
         <!-- 设备展示 -->
-        <div id="deviceShow" ref="deviceshow" class="device-show-box" :style="{ height: windowHeight + 'px', backgroundSize: '100% ' + windowHeight + 'px' }">
+        <div id="deviceShow" ref="deviceshow" class="device-show-box"
+            :style="{ height: windowHeight + 'px', backgroundSize: '100% ' + windowHeight + 'px' }">
             <div class="title-box" id="deviceTitleBgDown">
                 <div class="bg-box">
                     <div class="title-bg"></div>
                     <div class="title-bg2"></div>
                 </div>
-                <div class="title" :class="deviceTitleDownAnimation ? 'device-text-down' : ''">住进AI未来家</div>
+                <div class="title animate__animated" :class="{ 'animate__flipInX': deviceAnimation }">住进AI未来家</div>
             </div>
             <!-- 特效：类似小度官网设备的效果，鼠标悬浮图片翻转，描述转出。 -->
             <div class="device-content">
-                <img class="device-img animate__animated" :class="{ animate__fadeInUp: deviceAnimation }" src="../../assets/device-show.gif" />
+                <img class="device-img animate__animated"
+                    :class="{ 'animate__fadeInUp': deviceAnimation, 'display-none': !deviceAnimation }"
+                    src="../../assets/device-show.gif" />
             </div>
         </div>
         <!-- <div>{{ windowWidth }} {{ windowHeight }}</div> -->
@@ -48,22 +47,33 @@
         <div class="scene-cotent" ref="scene">
             <div class="scene-left">
                 <div class="describe-top">
-                    <div class="text animate__animated" :class="{ animate__fadeInUp: sceneAnimation }">个性化定制</div>
-                    <div class="text animate__animated" :class="{ animate__fadeInUp: sceneAnimation }">无忧售后</div>
-                    <div class="line"></div>
+                    <div class="text animate__animated"
+                        :class="{ 'animate__fadeInUp': sceneAnimation, 'display-none': !sceneAnimation }">个性化定制</div>
+                    <div class="text animate__animated"
+                        :class="{ 'animate__fadeInUp': sceneAnimation, 'display-none': !sceneAnimation }">无忧售后</div>
+                    <div class="line animate__animated"
+                        :class="{ 'animate__fadeInUp': sceneAnimation, 'display-none': !sceneAnimation }">
+                    </div>
                 </div>
                 <div class="describe-bottom animate__animated">
-                    <div class="title animate__animated">应用场景</div>
-                    <div class="describe animate__animated">全屋智能商用产品面向酒店、办公、地产、家居、民宿等多行业场景</div>
+                    <div class="title animate__animated"
+                        :class="{ 'animate__fadeInUp': sceneAnimation, 'display-none': !sceneAnimation }">应用场景</div>
+                    <div class="describe animate__animated"
+                        :class="{ 'animate__fadeInUp': sceneAnimation, 'display-none': !sceneAnimation }">
+                        全屋智能商用产品面向酒店、办公、地产、家居、民宿等多行业场景</div>
                 </div>
             </div>
-            <div class="scene-item animate__animated" v-for="(item, index) in sceneList" :key="{ index }" :class="{ animate__fadeInUp: sceneAnimation }">
+            <div class="scene-item animate__animated" v-for="( item, index ) in    sceneList   " :key="index"
+                :class="{ 'animate__fadeInUp': sceneAnimation, 'display-none': !sceneAnimation }">
                 <img class="img" :src="item.img" />
                 <div class="img-describe" :style="{ background: item.background }">
                     <div class="title">{{ item.title }}</div>
                     <div class="describe">{{ item.descrobe }}</div>
                     <div class="keyword-list">
-                        <div class="keyword-item" v-for="(keyword, keywordIndex) in item.keyword" :key="{ keywordIndex }">{{ keyword.word }}</div>
+                        <div class="keyword-item" v-for="(   keyword, keywordIndex   ) in    item.keyword   "
+                            :key="keywordIndex">
+                            {{
+                                keyword.word }}</div>
                     </div>
                 </div>
             </div>
@@ -73,12 +83,9 @@
             <div class="service-content" ref="service">
                 <div class="service-left">
                     <div class="service-list">
-                        <div
-                            class="service-item animate__animated"
-                            v-for="(item, index) in serviceList"
-                            :key="{ index }"
-                            :class="{ animate__fadeInUp: serviceAnimation }"
-                        >
+                        <div class="service-item animate__animated" v-for="(   item, index   ) in    serviceList   "
+                            :key="index"
+                            :class="{ 'animate__fadeInUp': serviceAnimation, 'display-none': !serviceAnimation }">
                             <div :class="item.icon" class="iconfont"></div>
                             <div class="service-title-box">
                                 <div class="serial-num">0{{ index + 1 }}.</div>
@@ -87,54 +94,44 @@
                         </div>
                     </div>
                 </div>
-                <video
-                    class="service-right animate__animated"
-                    src="../../assets/room-ctrl.mp4"
-                    :controls="false"
-                    autoplay
-                    muted
-                    loop
-                    :class="{ animate__fadeInUp: serviceAnimation }"
-                ></video>
+                <video class="service-right animate__animated" src="../../assets/room-ctrl.mp4" :controls="false" autoplay
+                    muted loop :class="{ animate__fadeInUp: serviceAnimation, 'display-none': !serviceAnimation }"></video>
             </div>
         </div>
         <!-- 网站开发 -->
         <div id="webDev" class="web-dev-content" ref="web">
-            <div class="web-dev-title animate__animated" :class="{ animate__slideInLeft: webAnimation }">网站开发</div>
+            <div class="web-dev-title animate__animated"
+                :class="{ 'animate__slideInLeft': webAnimation, 'display-none': !webAnimation }">网站开发</div>
             <div class="web-dev-list">
-                <div class="web-dev-item" v-for="(item, index) in webDevList" :key="{ index }" @click="onWebDevItemClick(item.typeId)">
-                    <img
-                        class="web-dev-img"
-                        :src="item.img"
-                        v-if="(index + 1) % 2 != 1"
-                        :style="(index + 1) % 2 == 1 ? 'padding-right: 0rem' : 'padding-right: 0.5rem'"
-                    />
-                    <div class="web-dev-text" ref="web" :style="(index + 1) % 2 == 1 ? 'padding-right: 0.5rem' : 'padding-right: 0rem'">
-                        <div
-                            class="web-dev-item-title animate__animated"
-                            :class="{ animate__fadeInUp: webAnimation }"
+                <div class="web-dev-item" v-for="(   item, index   ) in    webDevList   " :key="index"
+                    @click="onWebDevItemClick(item.typeId)">
+                    <img class="web-dev-img" :src="item.img" v-if="(index + 1) % 2 != 1"
+                        :style="(index + 1) % 2 == 1 ? 'padding-right: 0rem' : 'padding-right: 0.5rem'" />
+                    <div class="web-dev-text" ref="web"
+                        :style="(index + 1) % 2 == 1 ? 'padding-right: 0.5rem' : 'padding-right: 0rem'">
+                        <div class="web-dev-item-title animate__animated"
+                            :class="{ 'animate__fadeInUp': webAnimation, 'display-none': !webAnimation }"
                             :style="{ background: 'url(' + require('../../assets/0' + (index + 1) + '.png') + ') no-repeat' }"
-                            style="background-size: auto 100%"
-                        >
+                            style="background-size: auto 100%">
                             {{ item.title }}
                         </div>
-                        <div class="web-dev-introduce animate__animated" :class="{ animate__fadeInUp: webAnimation }">{{ item.introduce }}</div>
+                        <div class="web-dev-introduce animate__animated"
+                            :class="{ 'animate__fadeInUp': webAnimation, 'display-none': !webAnimation }">{{
+                                item.introduce }}</div>
                     </div>
-                    <img class="web-dev-img animate__animated" :class="{ animate__fadeInUp: webAnimation }" :src="item.img" v-if="(index + 1) % 2 == 1" />
+                    <img class="web-dev-img animate__animated"
+                        :class="{ 'animate__fadeInUp': webAnimation, 'display-none': !webAnimation }" :src="item.img"
+                        v-if="(index + 1) % 2 == 1" />
                 </div>
             </div>
         </div>
         <!-- 电路板设计 -->
         <view id="pcb" class="pcb-design-content">
-            <view class="pcb-opt-box animate__animated" :class="{ animate__fadeInUp: pcbAnimation }" ref="pcb">
+            <view class="pcb-opt-box animate__animated"
+                :class="{ 'animate__fadeInUp': pcbAnimation, 'display-none': !pcbAnimation }" ref="pcb">
                 <view class="pcb-opt-list">
-                    <view
-                        class="pcb-opt-item"
-                        :class="index == curPcbOptIndex ? 'pcb-opt-item-active' : ''"
-                        v-for="(item, index) in pcbOptList"
-                        :key="{ index }"
-                        @mouseover="onPcbOptItemClick(index)"
-                    >
+                    <view class="pcb-opt-item" :class="index == curPcbOptIndex ? 'pcb-opt-item-active' : ''"
+                        v-for="(   item, index   ) in    pcbOptList   " :key="index" @mouseover="onPcbOptItemClick(index)">
                         <view v-if="item.titleIcon" class="opt-title-icon iconfont" :class="item.titleIcon"></view>
                         <img v-if="item.titleIconImg" class="opt-title-icon-img" :src="item.titleIconImg" />
                         <view class="opt-title">{{ item.title }}</view>
@@ -150,14 +147,13 @@
         </view>
         <!-- 联系我们 -->
         <view id="contact" class="contact-us-content">
-            <view class="contact-title animate__animated" :class="{ animate__fadeInUp: contactAnimation }" ref="contact">联系方式</view>
+            <view class="contact-title animate__animated"
+                :class="{ 'animate__fadeInUp': contactAnimation, 'display-none': !contactAnimation }" ref="contact">
+                联系方式</view>
             <view class="contact-detail-list">
-                <view
-                    class="contact-detail-item animate__animated"
-                    :class="{ animate__fadeInUp: contactAnimation }"
-                    v-for="(item, index) in contactDeatilList"
-                    :key="index"
-                >
+                <view class="contact-detail-item animate__animated"
+                    :class="{ 'animate__fadeInUp': contactAnimation, 'display-none': !contactAnimation }"
+                    v-for="(   item, index   ) in    contactDeatilList   " :key="index">
                     <img class="left" :src="item.img" />
                     <view class="right" v-if="item.hasOwnProperty('detail')">
                         <view class="contact-type-title">{{ item.title }}</view>
@@ -170,9 +166,10 @@
         <view class="get-quote-box">
             <view class="quote-title">免费获取报价方案</view>
             <view class="contact-form-list">
-                <view class="contact-form-item" v-for="(item, index) in contactFormList" :key="index">
+                <view class="contact-form-item" v-for="(   item, index   ) in    contactFormList   " :key="index">
                     <view class="from-icon iconfont" :class="item.icon"></view>
-                    <input class="input" type="text" :name="item.title" :value="item.value" :placeholder="item.placeholder" />
+                    <input class="input" type="text" :name="item.title" :value="item.value"
+                        :placeholder="item.placeholder" />
                 </view>
             </view>
             <view class="phone-code">
@@ -193,13 +190,11 @@ export default {
         topBar
     },
     setup() {
-        const myref = ref(null);
         const router = useRouter();
         let windowHeight = ref(window.innerHeight);
         let windowWidth = ref(document.body.clientWidth);
         let widthTimer = false; // 监听窗口宽度变化防抖
         let deviceTitleBgDownAnimation = false;
-        let deviceTitleDownAnimation = false;
         let showContactDialog = ref(false); // 联系浮窗信息弹窗
         let contactList = [
             {
@@ -263,7 +258,7 @@ export default {
                 icon: "icon-service",
                 title: "无忧售后"
             }
-        ];
+        ]
         let webDevList = [
             {
                 title: "官方网站开发",
@@ -363,31 +358,45 @@ export default {
         const serviceAnimation = ref(null);
         const webAnimation = ref(null);
         const pcbAnimation = ref(null);
-        const contactAnimation = ref(null);
+        const contactAnimation = ref(null)
         let throttle = null; // 滚动监听节流
         let deviceImgAnimation = false; // 首页图片
 
         onMounted(() => {
             window.addEventListener("scroll", () => {
                 let pageYOffset = window.pageYOffset;
-                if (pageYOffset >= deviceshow.value.offsetTop / 3) {
-                    deviceAnimation.value = true;
-                }
-                if (pageYOffset >= scene.value.offsetTop / 3) {
-                    sceneAnimation.value = true;
-                }
-                if (pageYOffset >= service.value.offsetTop / 3) {
-                    serviceAnimation.value = true;
-                }
-                if (pageYOffset >= web.value.offsetTop / 3) {
-                    webAnimation.value = true;
-                }
-                if (pageYOffset >= pcb.value.offsetTop / 3) {
-                    pcbAnimation.value = true;
-                }
-                if (pageYOffset >= contact.value.offsetTop / 3) {
-                    contactAnimation.value = true;
-                }
+                let timeOut = null;
+                clearTimeout(timeOut);
+                timeOut = setTimeout(() => {
+                    if (pageYOffset >= (deviceshow.value.offsetTop - windowHeight.value)) {
+                        if (!deviceAnimation.value) deviceAnimation.value = true;
+                    }
+                    if (pageYOffset >= (scene.value.offsetTop - windowHeight.value)) {
+                        if (!sceneAnimation.value) sceneAnimation.value = true;
+                    } else {
+                        if (sceneAnimation.value) sceneAnimation.value = false;
+                    }
+                    if (pageYOffset >= (service.value.offsetTop - windowHeight.value)) {
+                        if (!serviceAnimation.value) serviceAnimation.value = true;
+                    } else {
+                        if (serviceAnimation.value) serviceAnimation.value = false;
+                    }
+                    if (pageYOffset >= (web.value.offsetTop - windowHeight.value)) {
+                        if (!webAnimation.value) webAnimation.value = true;
+                    } else {
+                        if (webAnimation.value) webAnimation.value = false;
+                    }
+                    if (pageYOffset >= (pcb.value.offsetTop - windowHeight.value)) {
+                        if (!pcbAnimation.value) pcbAnimation.value = true;
+                    } else {
+                        if (pcbAnimation.value) pcbAnimation.value = false;
+                    }
+                    if (pageYOffset >= (contact.value.offsetTop - windowHeight.value)) {
+                        if (!contactAnimation.value) contactAnimation.value = true;
+                    } else {
+                        if (contactAnimation.value) contactAnimation.value = false;
+                    }
+                }, 300)
             });
         });
 
@@ -465,11 +474,9 @@ export default {
         };
 
         return {
-            myref,
             windowHeight,
             windowWidth,
             deviceTitleBgDownAnimation,
-            deviceTitleDownAnimation,
             showContactDialog,
             contactList,
             curContactIndex,
@@ -502,7 +509,7 @@ export default {
             onBarClick,
             onContactOut,
             onWebDevItemClick,
-            onPcbOptItemClick
+            onPcbOptItemClick,
         };
     }
 };
@@ -510,6 +517,11 @@ export default {
 
 <style>
 @import "../../animation.css";
+
+.display-none {
+    opacity: 0 !important;
+}
+
 .content {
     width: 100%;
 }
@@ -612,6 +624,7 @@ export default {
     padding-top: 60px;
     background: #fff;
 }
+
 .index-img {
     width: 100%;
     max-width: 20rem;
@@ -627,7 +640,7 @@ export default {
     width: 100%;
 }
 
-.device-show-box > .title-box {
+.device-show-box>.title-box {
     position: relative;
     width: 100%;
 }
@@ -665,7 +678,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -60%);
+    transform: translate(-50%, -60%) !important;
     background: radial-gradient(139.19% 135.43% at 40.37% 28.4%, #acc5e2 0%, rgba(172, 197, 226, 0) 100%);
     color: transparent;
     background-clip: text;
